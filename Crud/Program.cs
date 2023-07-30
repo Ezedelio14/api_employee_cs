@@ -11,10 +11,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<EmployeeContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("dbconnect"))
-);
+options.UseSqlServer(builder.Configuration.GetConnectionString("dbconnect")));
 
 var app = builder.Build();
+
+app.UseCors(policy=>policy
+.AllowAnyHeader()
+.AllowAnyMethod()
+.SetIsOriginAllowed(origin=>true)
+.AllowCredentials());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
